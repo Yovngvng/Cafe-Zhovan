@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width ,initial-scale=1.0">
+    <title>کافه ژوان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modal-img" src="" alt="" width="200">
+        <h2 id="modal-name"></h2>
+        <p id="modal-price"></p>
+        <p id="modal-desc"></p>
+        <button id="addToCartBtn" class="checkout-btn">افزودن به سبد خرید</button>
+    </div>
+</div>
+
+<div class="main-content">
+    <header class="header">
+        <h1>کافه ژوان</h1>
+        <p>منوی دیجیتال</p>
+        <div class="cart-icon-container">
+            <button id="cartIcon" class="cart-icon"> 💳 <span id="cartCount" class="cart-count">0</span></button>
+        </div>
+    </header>
+    <nav id="category-nav" class="category-nav"></nav>
+    <div class="search-container">
+        <input type="text" id="liveSearch" placeholder="جست و جوی محصول ..." autocomplete="off">
+        <div id="searchResults" class="search-results-box"></div>
+    </div>
+    <div id="featured-section" class="featured-section" style="display: none;">
+        <h2 class="featured-title">ویژه های کافه ژوان</h2>
+        <div id="featured-items-container" class="featured-items-container"></div>
+    </div>
+    
+    <main id="menu-container"></main>
+</div>
+
+<button id="scrollToTopBtn" class="scroll-top" style="display: none;">⇡</button>
+
+<!-- مودال سبد خرید -->
+<div id="cartModal" class="modal cart-modal">
+    <div class="modal-content cart-modal-content">
+        <span class="close close-cart">&times;</span>
+        <h2> سبد خرید شما </h2>
+        <div id="cartItemsList" class="cart-items-list">
+            <!-- آیتم های سبد خرید در اینجا قرار میگیرند -->
+        </div>
+        <div class="cart-summary">
+            
+            <div class="order-location-box">
+                <label>محل سفارش:</label>
+
+                <select id="orderLocation">
+                    <option value="">انتخاب کنید</option>
+                    <option value="سالن">سالن</option>
+                    <option value="فضای باز">فضای باز</option>
+                    <option value="بیرون بر">بیرون بر</option>
+                </select>
+
+                <div id="tableSelector" style="display: none;">
+                    <label>شماره میز:</label>
+
+                    <select id="tableNumber">
+                        <option value="">انتخاب میز</option>
+                        <option value="1">میز 1</option>
+                        <option value="2">میز 2</option>
+                        <option value="3">میز 3</option>
+                        <option value="4">میز 4</option>
+                        <option value="5">میز 5</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="order-note-box">
+                <label>یادداشت سفارش:</label>
+
+                <textarea id="orderNote" placeholder="مثلا: بدون شکر, یخ کمتر, خامه بیشتر ..."></textarea>
+            </div>
+
+            <p>جمع کل: <span id="cartTotal">0</span> هزار تومان</p>
+            <button id="clearCartBtn" class="clear-cart-btn">خالی کردن سبد خرید</button>
+            <button id="checkoutBtn" class="checkout-btn"> ثبت سفارش (پیامک)</button>
+        </div>
+    </div>
+</div>
+
+<script src="menu-data.js"></script>
+<script src="script.js"></script>
+
+<div id="toast"></div>
+
+</body>
+</html>

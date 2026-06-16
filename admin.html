@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>سفارشات کافه</title>
+
+<style>
+    body {
+        background: #0f172a;
+        color: white;
+        font-family: tahoma;
+        padding: 20px;
+    }
+
+    .order {
+        background: #1e293b;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+    }
+
+    .ready-btn,
+    .done-btn {
+        padding: 8px 12px;
+        margin: 5px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    #status {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    .stat-card {
+        background: #1e293b;
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-weight: bold;
+    }
+
+    .pending-status {
+        color: gold;
+    }
+
+    .ready-status {
+        color: limegreen;
+    }
+
+    .done-status {
+        color: gray;
+    }
+
+    #clearDoneOrders {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>سفارشات</h1>
+
+<div id="status">
+
+    <div class="stat-card">
+        تعداد سفارش امروز:
+        <span id="todayOrders">0</span>
+    </div>
+
+    <div class="stat-card">
+        فروش امروز:
+        <span id="todaySales">0</span>
+        هزار تومان
+    </div>
+
+    <div class="stat-card">
+        در انتظار:
+        <span id="pendingCount">0</span>
+    </div>
+
+    <div class="stat-card">
+        آماده:
+        <span id="readyCount">0</span>
+    </div>
+
+    <div class="stat-card">
+        تحویل داده شده:
+        <span id="doneCount">0</span>
+    </div>
+
+</div>
+
+<button id="clearDoneOrders">
+    حذف سفارش های تحویل داده شده
+</button>
+
+<div id="ordersContainer"></div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
