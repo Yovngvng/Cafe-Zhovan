@@ -7,21 +7,33 @@ body {
 
 .header {
     text-align: center;
-    padding: 30px 15px;
-    background: #081424;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 40px 15px 32px;
+    background: linear-gradient(180deg, #0d1f38, #081424);
+    border-bottom: 1px solid rgba(201, 160, 61, 0.2);
+    position: relative;
 }
 
 .header h1 {
     margin: 0;
-    font-weight: 800;
-    font-size: 26px;
+    font-family: 'Aref Ruqaa', serif;
+    font-weight: 700;
+    font-size: 38px;
+    color: #f3d98a;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(201, 160, 61, 0.3);
 }
 
-.header p {
-    margin-top: 5px;
+.header-subtitle {
+    margin: 8px 0 0;
     opacity: 0.6;
-    font-size: 14px;
+    font-size: 13px;
+}
+
+.header-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9a03d, transparent);
+    margin: 16px auto 0;
 }
 
 /* دسته بندی بالا */
@@ -71,16 +83,19 @@ body {
     display: flex;
     gap: 14px;
     align-items: center;
-    padding: 14px 0;
+    padding: 14px 16px;
     transition: 0.25s;
-    margin: 8px 0;
-    background: rgba(255,255,255,0.03);
-    border-radius: 14px;
+    margin: 10px 0;
+    background: #102540;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
 }
 
 .menu-item:hover {
-    background: rgba(255,255,255,0.06);
+    background: #16304f;
+    border-color: rgba(201, 160, 61, 0.35);
     transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
 .menu-item.show {
@@ -89,7 +104,19 @@ body {
 }
 
 .menu-item span:first-child {
-    font-size: 14px;
+    flex: 1;
+    text-align: right;
+}
+
+.menu-item .price {
+    color: #c9a03d;
+    font-weight: 700;
+}
+
+.menu-item > span:first-child {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .menu-image {
@@ -112,7 +139,8 @@ body {
 }
 
 .menu-price {
-    font-weight: 600;
+    font-weight: 700;
+    color: #c9a03d;
 }
 
 .item-img {
@@ -132,9 +160,11 @@ body {
 }
 
 .item-price {
-    opacity: 0.7;
+    opacity: 1;
     font-size: 14px;
     margin-top: 4px;
+    color: #c9a03d;
+    font-weight: 700;
 }
 
 /* برای موبایل کمی فاصبه از زیر صفحه */
@@ -397,41 +427,41 @@ body {
 /* ===== کارت محصول ویژه (همانند menu-item اما در افقی) =========== */
 .featured-card {
     flex: 0 0 180px;
-    background: #c7c4c4;
-    border-radius: 28px;
-    padding: 12px;
+    background: linear-gradient(160deg, #102540, #0c1d33);
+    border-radius: 20px;
+    padding: 14px;
     text-align: center;
     cursor: pointer;
     transition: 0.25s ease;
-    border: 2px solid #e67e22;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    border: 1px solid rgba(201, 160, 61, 0.3);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
 }
 
 .featured-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.3);
-    background: #fff9f0;
+    box-shadow: 0 12px 24px rgba(201, 160, 61, 0.2);
+    background: #c9a03d;
 }
 
 .featured-card img {
     width: 100%;
     height: 130px;
     object-fit: cover;
-    border-radius: 20px;
-    margin-bottom: 8px;
+    border-radius: 14px;
+    margin-bottom: 10px;
 }
 
-.featured-card .featured-name {
-    font-weight: 800;
-    font-size: 16px;
-    color: #3b2a1f;
+.featured-card .feature-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
     margin: 8px 0 4px;
 }
 
-.featured-card .featured-price {
+.featured-card .feature-price {
     font-weight: 700;
     font-size: 14px;
-    color: #b64926;
+    color: #c9a03d;
 }
 
 @media (max-width: 550px) {
@@ -675,4 +705,12 @@ body {
 #toast.show {
     opacity: 1;
     visibility: visible;
+}
+
+.menu-category-title {
+    padding: 10px 16px 4px;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0.5;
+    color: #c9a03d;
 }

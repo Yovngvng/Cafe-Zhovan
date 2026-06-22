@@ -24,7 +24,7 @@ async function saveOrderToSupabase(order) {
 function formatPrice(p) {
     // اگر خالی یا undefined باشه, رشته خالی برگردون
     if (!p && p !== 0) return "";
-    return String(p).trim() + " هزار";
+    return Number(p * 1000).toLocaleString('fa-IR') + " تومان";
 }
 
 function showToast(message) {
@@ -238,6 +238,7 @@ async function checkout() {
 
     const order = {
         id: Date.now(),
+        createdAt: Date.now(),
         location,
         tableNumber,
         note,
@@ -486,7 +487,7 @@ menu.forEach((section, index) => {
                 // نمایش نام آیتم به عنوان sub-title
                 const nameRow = document.createElement("div");
 
-                nameRow.classList.add("menu-item");
+                nameRow.classList.add("menu-category-title");
                 nameRow.innerHTML = `<span>${item.name}</span><span class="price"></span>`;
                 sectionDiv.appendChild(nameRow);
 

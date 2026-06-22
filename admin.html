@@ -2,109 +2,68 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>سفارشات کافه</title>
-
-<style>
-    body {
-        background: #0f172a;
-        color: white;
-        font-family: tahoma;
-        padding: 20px;
-    }
-
-    .order {
-        background: #1e293b;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 12px;
-    }
-
-    .ready-btn,
-    .done-btn {
-        padding: 8px 12px;
-        margin: 5px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-
-    #status {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-    }
-
-    .stat-card {
-        background: #1e293b;
-        padding: 12px 18px;
-        border-radius: 12px;
-        font-weight: bold;
-    }
-
-    .pending-status {
-        color: gold;
-    }
-
-    .ready-status {
-        color: limegreen;
-    }
-
-    .done-status {
-        color: gray;
-    }
-
-    #clearDoneOrders {
-        padding: 10px 15px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-bottom: 20px;
-    }
-</style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل مدیریت || کافه ژوان</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
 
-<h1>سفارشات</h1>
-
-<div id="status">
-
-    <div class="stat-card">
-        تعداد سفارش امروز:
-        <span id="todayOrders">0</span>
+<div id="loginScreen">
+    <div id="loginBox">
+        <h2>پنل مدیریت</h2>
+        <p>کافه ژوان</p>
+        <input type="password" id="passwordInput" placeholder="رمز عبور را وارد کنید">
+        <button id="loginBtn">ورود</button>
+        <p id="loginError" style="color:#e55;display:none">رمز اشتباه است</button>
     </div>
-
-    <div class="stat-card">
-        فروش امروز:
-        <span id="todaySales">0</span>
-        هزار تومان
-    </div>
-
-    <div class="stat-card">
-        در انتظار:
-        <span id="pendingCount">0</span>
-    </div>
-
-    <div class="stat-card">
-        آماده:
-        <span id="readyCount">0</span>
-    </div>
-
-    <div class="stat-card">
-        تحویل داده شده:
-        <span id="doneCount">0</span>
-    </div>
-
 </div>
 
-<button id="clearDoneOrders">
-    حذف سفارش های تحویل داده شده
-</button>
+<div id="adminPanel" style="display:none">
+
+<header class="admin-header">
+    <h1>کافه ژوان</h1>
+    <p>پنل مدیریت سفارشات</p>
+</header>
+
+<div id="status">
+    <div class="stat-card">
+        <span class="stat-label">سفارشات امروز</span>
+        <span class="stat-value" id="todayOrders">0</span>
+    </div>
+    <div class="stat-card gold">
+        <span class="stat-label">فروش امروز</span>
+        <span class="stat-value" id="todaySales">0</span> تومان</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">در انتظار</span>
+        <span class="stat-value" id="pendingCount">0</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">آماده</span>
+        <span class="stat-value" id="readyCount">0</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-label">تحویل داده شد</span>
+        <span class="stat-value" id="doneCount">0</span>
+    </div>
+    
+</div>
+
+<button id="clearDoneOrders">حذف سفارش های تحویل داده شده</button>
+
+<div id="statusFilter">
+    <button class="filter-btn active" data-filter="all">همه</button>
+    <button class="filter-btn" data-filter="در انتظار">در انتظار</button>
+    <button class="filter-btn" data-filter="آماده شد">آماده</button>
+    <button class="filter-btn" data-filter="تحویل داده شد"> تحویل داده شد</button>
+</div>
 
 <div id="ordersContainer"></div>
 
 <script src="admin.js"></script>
 
+</div>
 </body>
 </html>
