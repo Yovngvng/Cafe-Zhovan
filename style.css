@@ -10,7 +10,8 @@ body {
     padding: 40px 15px 32px;
     background: linear-gradient(180deg, #0d1f38, #081424);
     border-bottom: 1px solid rgba(201, 160, 61, 0.2);
-    position: relative;
+    top: 0;
+    z-index: 101;
 }
 
 .header h1 {
@@ -46,7 +47,8 @@ body {
     background: #0e213f;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 102;
+    border-bottom: 1px solid rgba(201, 160, 61, 0.1);
 }
 
 .category-nav button {
@@ -301,7 +303,7 @@ body {
     padding: 10px 20px;
     background: #0e213f;
     position: sticky;
-    top: 60px;
+    top: 55px;
     z-index: 99;
 }
 
@@ -520,9 +522,10 @@ body {
 
 /* ===============  آیکون سبد خرید  =============== */
 .cart-icon-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 999;
 }
 .cart-icon {
     background: #e67e22;
@@ -714,4 +717,12 @@ body {
     font-weight: 700;
     opacity: 0.5;
     color: #c9a03d;
+}
+
+.category-nav button.active {
+    background: #c9a03d;
+    color: #0a192f;
+    border-color: #c9a03d;
+    font-weight: 700;
+    transform: scale(1.05);
 }

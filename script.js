@@ -690,7 +690,42 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".menu-item").forEach(item => {
     observer.observe(item);
-}); 
+});
+
+const navButtons = document.querySelectorAll("#category-nav button");
+const menuSections = document.querySelectorAll(".menu-section");
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+
+        if (entry.isIntersecting) {
+
+            const sectionId = entry.target.id;
+
+            const index = sectionId.replace("section", "");
+
+            navButtons.forEach(btn => btn.classList.remove("active"));
+
+            if (navButtons[index]) {
+                navButtons[index].classList.add("active");
+
+                navButtons[index].scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center"
+                });
+            }
+        }
+    });
+}, {
+
+    rootMargin: "-20% 0px -60% 0px",
+    threshold: 0
+});
+
+menuSections.forEach(section => {
+    sectionObserver.observe(section);
+});
 
 
 const orderLocation = document.getElementById("orderLocation");
