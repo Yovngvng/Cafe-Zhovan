@@ -47,7 +47,7 @@ let cart = [];
 
 // بارگذاری سبد از localStorage
 function loadCart() {
-    const saved = localStorage.getItem('cafeCart');
+    const saved = sessionStorage.getItem('cafeCart');
     if (saved) {
         try {
             cart = JSON.parse(saved);
@@ -60,7 +60,7 @@ function loadCart() {
 
 // ذخیره سبد در localStorage
 function saveCart() {
-    localStorage.setItem('cafeCart', JSON.stringify(cart));
+    sessionStorage.setItem('cafeCart', JSON.stringify(cart));
     updateCartUI();
 }
 
@@ -261,7 +261,7 @@ async function checkout() {
 
     updateCartUI();
 
-    localStorage.removeItem("cafeCart");
+    sessionStorage.removeItem("cafeCart");
 
     document.getElementById("orderNote").value = "";
 
