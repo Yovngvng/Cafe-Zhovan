@@ -740,3 +740,22 @@ if(orderLocation) {
         }
     });
 }
+
+
+(function autoDetectTableFromQR() {
+    const params = new URLSearchParams(window.location.search);
+    const tableFromQR = params.get("table");
+
+    if (!tableFromQR) return;
+
+    const tableNumberSelect = document.getElementById("tableNumber");
+    if (!orderLocation || !tableSelector || !tableNumberSelect) return;
+
+    const validOption = Array.from(tableNumberSelect.options).some(opt => opt.value === tableFromQR);
+
+    if (!validOption) return;
+
+    orderLocation.value = "سالن";
+    tableSelector.style.display = "block";
+    tableNumberSelect.value = tableFromQR;
+})();
