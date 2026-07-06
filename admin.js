@@ -128,12 +128,38 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     });
 });
 
+function buildOrderCard(order) {
+    const div = document.createElement("div");
+    div.className = "order";
+    div.innerHTML = `
+        <h3>سفارش #${order.id}</h3>
+        <p>زمان: ${order.time} (${timeAgo(order.createdAt)})</p>
+        <p>محل: ${order.location} ${order.tableNumber ? '- میز ' + order.tableNumber : ''}</p>
+        <p>جمع کل: ${Number(order.total * 1000). toLocaleString('fa-IR')} تومان</p>
+        <p>یادداشت: ${order.note || "-"}</p>
+        <p>وضعیت: <strong>${order.status}</strong></p>
+        <hr>
+        ${order.items.map(i => `<div>${i.name} x ${i.quantity}</div>`).join("")}
+        <br>
+        <button class="ready-btn" data-id="${order.id}">آماده شد</button>
+        <button class="done-btn" data-id="${order.id}">تحویل داده شد</button>
+        <button class="delete-btn" data-id="{order.id"}>حذف</button>
+    `;
+    return div;
+}
+
+const STATUS_PRIORITY = {
+    "در انتظار": 0,
+    "آماده شد": 1,
+    "تحویل داده شد": 2
+};
 
 async function renderOrders() {
     const container = document.getElementById("ordersContainer");
+    const latestContainer = document.getElementById("latestOrdersContainer");
 
+    // orders از fetchOrders() به ترتیب جدیدترین اول برمیگرده (order=id.desc)
     const orders = await fetchOrders();
-    let filteredOrders = currentFilter === "all" ? orders : orders.filter(o => o.status === currentFilter);
 
     document.getElementById("todayOrders").textContent = orders.length;
     document.getElementById("todaySales").textContent = Number(orders.reduce((s, o) => s + (o.total || 0), 0) * 1000).toLocaleString('fa-IR');
@@ -141,32 +167,33 @@ async function renderOrders() {
     document.getElementById("readyCount").textContent = orders.filter(o => o.status === "آماده شد").length;
     document.getElementById("doneCount").textContent = orders.filter(o => o.status === "تحویل داده شد").length;
 
+    const latestThree = orders.slice(0, 3);
+    const otherOrders = orders.slice(3);
+
+    latestContainer.innerHTML = "";
+    if (latestThree.length === 0) {
+        latestContainer.innerHTML = "<p>هنوز سفارشی ثبت نشده</p>";
+    } else {
+        latestThree.forEach(order => latestContainer.appendChild(buildOrderCard(order)));
+    }
+
+    let filteredOrders = currentFilter === "all" ? otherOrders : otherOrders.filter(o => o.status === currentFilter);
+
+    filteredOrders = [...filteredOrders].sort((a, b) => {
+        const pa = STATUS_PRIORITY[a.status] ?? 0;
+        const pb = STATUS_PRIORITY[b.status] ?? 0;
+        if (pa !== pb) return pa - pb;
+        return a.id - b.id;
+    });
+
     container.innerHTML = "";
 
     if (filteredOrders.length === 0) {
-        container.innerHTML = "<p>هنوز سفارشی ثبت نشده</p>";
+        container.innerHTML = "<p>سفارشی در این بخش نیست</p>";
         return;
     }
 
-    filteredOrders.forEach(order => {
-        const div = document.createElement("div");
-        div.className = "order";
-        div.innerHTML = `
-            <h3>سفارش #${order.id}</h3>
-            <p>زمان: ${order.time} (${timeAgo(order.createdAt)})</p>
-            <p>محل: ${order.location} ${order.tableNumber ? '- میز ' + order.tableNumber : ''}</p>
-            <p>جمع کل: ${Number(order.total * 1000).toLocaleString('fa-IR')}  تومان</p>
-            <p>یادداشت: ${order.note || "-"}</p>
-            <p>وضعیت: <strong>${order.status}</strong></p>
-            <hr>
-            ${order.items.map(i => `<div>${i.name} x ${i.quantity}</div>`).join("")}
-            <br>
-            <button class="ready-btn" data-id="${order.id}">آماده شد</button>
-            <button class="done-btn" data-id="${order.id}">تحویل داده شد</button>
-            <button class="delete-btn" data-id="${order.id}">حذف</button>
-        `;
-        container.appendChild(div);
-    });
+    filteredOrders.forEach(order => container.appendChild(buildOrderCard(order)));
 }
 
 document.addEventListener("click", async (e) => {
