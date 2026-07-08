@@ -733,7 +733,7 @@ const tableSelector = document.getElementById("tableSelector");
 
 if(orderLocation) {
     orderLocation.addEventListener("change", () => {
-        if(orderLocation.value === "سالن"){
+        if(orderLocation.value === "سالن" || orderLocation.value === "فضای باز"){
             tableSelector.style.display = "block";
         } else {
             tableSelector.style.display = "none";
@@ -755,6 +755,7 @@ if(orderLocation) {
 
     if (!validOption) return;
 
+    const locationFromQR = params.get("location");
     orderLocation.value = "سالن";
     tableSelector.style.display = "block";
     tableNumberSelect.value = tableFromQR;
