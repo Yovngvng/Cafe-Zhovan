@@ -82,6 +82,46 @@ body {
     color: #c9a03d;
 }
 
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #c9a03d;
+    margin: 24px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201, 160, 61, 0.25);
+}
+
+#statusFilter {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.filter-btn {
+    background: #102540;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: rgba(201, 160, 61, 0.5);
+    color: #c9a03d;
+}
+
+.filter-btn.active {
+    background: #c9a03d;
+    border-color: #c9a03d;
+    color: #0a192f;
+}
+
 .order {
     background: #102540;
     border: 1px solid rgba(255, 255, 255, 0.08);
