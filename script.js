@@ -756,7 +756,7 @@ if(orderLocation) {
     if (!validOption) return;
 
     const locationFromQR = params.get("location");
-    orderLocation.value = (locationFromQR === "outdoor") ? "سالن" : "فضای باز";
+    orderLocation.value = (locationFromQR === "outdoor") ? "فضای باز" : "سالن";
     tableSelector.style.display = "block";
     tableNumberSelect.value = tableFromQR;
 })();
