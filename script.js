@@ -257,6 +257,10 @@ async function checkout() {
 
     showToast("سفارش با موفقیت ثبت شد")
 
+    const ordered = JSON.parse(localStorage.getItem('orderedProducts') || '{}');
+        cart.forEach(item => { ordered[item.name] = true; });
+        localStorage.setItem('orderedProducts', JSON.stringify(ordered));
+
     cart = [];
 
     updateCartUI();
@@ -396,6 +400,10 @@ function openModal(product) {
     let priceDisplay = product.price ? formatPrice(product.price) : "نامشخص";
     modalPrice.textContent = priceDisplay;
     modalDesc.textContent = product.desc || "بدون توضیحات";
+    fetchAllRatings().then(data => {
+        allRatings = data;
+        renderStars(product.name);
+    });
     const addBtn = document.getElementById("addToCartBtn");
 
     if (addBtn) {
@@ -760,3 +768,101 @@ if(orderLocation) {
     tableSelector.style.display = "block";
     tableNumberSelect.value = tableFromQR;
 })();
+
+let allRatings = [];
+
+async function fetchAllRatings() {
+    try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/ratings?select=product_name,rating`, {
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+        });
+        if (!res.ok) return [];
+        return await res.json();
+    } catch (e) {
+        return [];
+    }
+}
+
+function getRatingsSummary(productName) {
+    const productRatings = allRatings.filter(r => r.product_name === productName);
+    if (productRatings.length === 0) return { avg: 0, count: 0 };
+    const sum = productRatings.reduce((s, r) => s + r.rating, 0);
+    return { avg: sum / productRatings.length, count: productRatings.length };
+}
+
+function hasUserRated(productName) {
+    const voted = JSON.parse(localStorage.getItem('ratedProducts') || '{}');
+    return voted[productName] || null;
+}
+
+function hasOrderedProduct(productName) {
+    const ordered = JSON.parse(localStorage.getItem('orderedProducts') || '{}');
+    return !!ordered[productName];
+}
+
+function markUserRated(productName, value) {
+    const voted = JSON.parse(localStorage.getItem('ratedProducts') || '{}');
+    voted[productName] = value;
+    localStorage.setItem('ratedProducts', JSON.stringify(voted));
+}
+
+async function submitRating(productName, value) {
+    try {
+        await fetch(`${SUPABASE_URL}/rest/v1/ratings`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify({ product_name: productName, rating: value })
+        });
+    } catch (e) {}
+}
+
+function renderStars(productName) {
+    const starsContainer = document.getElementById("modal-stars");
+    const summaryEl = document.getElementById("modal-rating-summary");
+    const noteEl = document.getElementById("modal-rating-note");
+    if (!starsContainer || !summaryEl) return;
+
+    const stars = starsContainer.querySelectorAll(".star");
+    const userVote = hasUserRated(productName);
+    const { avg, count } = getRatingsSummary(productName);
+    const displayValue = userVote ? userVote : Math.round(avg);
+
+    stars.forEach(star => {
+        const val = Number(star.dataset.value);
+        star.classList.toggle("filled", val <= displayValue);
+    });
+
+    summaryEl.textContent = count > 0
+    ? `امتیاز: ${avg.toFixed(1)} از ${count} نظر`
+    : "هنوز نظری ثبت نشده، اولین نفر باش!";
+
+    const canRate = hasOrdered && !userVote;
+    starsContainer.classList.toggle("voted", !canRate);
+
+    stars.forEach(star => {
+        star.onclick = canRate ? async () => {
+            const value = Number(star.dataset.value);
+            markUserRated(productName, value);
+            await submitRating(productName, value);
+            allRatings.push({ product_name: productName, rating: value });
+            renderStars(productName);
+            showToast("ممنون, امتیازت ثبت شد! 🌟");
+        } : null;
+    });
+
+    if (noteEl) {
+        if (!hasOrdered) {
+            noteEl.textContent = "برای ثبت امتیاز, اول باید این محصول رو سفارش داده باشی";
+            noteEl.style.display = "block";
+        } else {
+            noteEl.style.display = "none";
+        }
+    }
+}
